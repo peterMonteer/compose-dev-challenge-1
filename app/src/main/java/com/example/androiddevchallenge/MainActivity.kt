@@ -18,11 +18,17 @@ package com.example.androiddevchallenge
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
+import androidx.navigation.compose.navigate
+import com.example.androiddevchallenge.components.ItemDogCard
+import com.example.androiddevchallenge.components.TopBar
+import com.example.androiddevchallenge.data.DogsDatabase
 import com.example.androiddevchallenge.ui.theme.MyTheme
 
 class MainActivity : AppCompatActivity() {
@@ -30,32 +36,29 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MyTheme {
-                MyApp()
+                MainView()
             }
         }
     }
 }
 
-// Start building your app here!
 @Composable
-fun MyApp() {
+fun MyApp(navController: NavController) {
     Surface(color = MaterialTheme.colors.background) {
-        Text(text = "Ready... Set... GO!")
-    }
-}
-
-@Preview("Light Theme", widthDp = 360, heightDp = 640)
-@Composable
-fun LightPreview() {
-    MyTheme {
-        MyApp()
-    }
-}
-
-@Preview("Dark Theme", widthDp = 360, heightDp = 640)
-@Composable
-fun DarkPreview() {
-    MyTheme(darkTheme = true) {
-        MyApp()
+        Column {
+            TopBar()
+            LazyColumn {
+                items(DogsDatabase.dogList) {
+                    DogsDatabase.dogList.forEach {
+                        ItemDogCard(
+                            it,
+                            onItemClicked = { dog ->
+                                navController.navigate("detail/${dog.id}")
+                            }
+                        )
+                    }
+                }
+            }
+        }
     }
 }
