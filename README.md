@@ -7,7 +7,7 @@
 
 ## :scroll: Description
 <!--- Describe your app in one or two sentences -->
-Tails is an app that allows you check some sweet ass puppies that need your help!
+Tails is an app that allows you check some puppies that need your help!
 
 ## :bulb: Motivation and Context
 <!--- Optionally point readers to interesting parts of your submission. -->
